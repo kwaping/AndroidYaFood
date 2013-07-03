@@ -20,8 +20,11 @@ public class Station extends BaseModel {
 
         station.stationName = jsonObject.getString("txtStationDescription");
 
-    	JSONArray itemArray = new JSONArray("[\"tblItem\"]");
-		JSONArray itemsArray = jsonObject.toJSONArray(itemArray);
+//    	JSONArray itemArray = new JSONArray("[\"tblItem\"]");
+//		JSONArray itemsArray = jsonObject.toJSONArray(itemArray);
+//    	station.items = Item.fromJson(itemsArray);
+
+    	JSONArray itemsArray = jsonObject.getJSONArray("tblItem");
     	station.items = Item.fromJson(itemsArray);
 
         return station;
@@ -30,7 +33,9 @@ public class Station extends BaseModel {
     public static ArrayList<Station> fromJson(JSONArray jsonArray) {
         ArrayList<Station> stations = new ArrayList<Station>(jsonArray.length());
 
-        for (int i=0; i < jsonArray.length(); i++) {
+		Log.d("DEBUG", "Stations jsonArray " +   jsonArray.toString());
+
+		for (int i=0; i < jsonArray.length(); i++) {
             JSONObject StationJson = null;
             try {
                 StationJson = jsonArray.getJSONObject(i);
