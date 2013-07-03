@@ -12,7 +12,6 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -99,7 +98,7 @@ public class OverviewActivity extends FragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Preferences activity
 		Intent i = new Intent(getApplicationContext(),
-	  			PreferenceActivity.class	
+	  			SettingsActivity.class	
 		);
 
 		startActivityForResult(i, PREFERENCE_SAVED);

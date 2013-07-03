@@ -21,11 +21,11 @@
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="com.tonyandollie.yafood.PreferencesActivity"
+			android:name="com.tonyandollie.yafood.YaFoodPreferences"
 			android:label="@string/title_activity_preferences" >
 		</activity>
 		<activity
-			android:name="com.tonyandollie.yafood.PreferenceActivity"
+			android:name="com.tonyandollie.yafood.SettingsActivity"
 			android:label="@string/title_activity_preference" >
 		</activity>
 	</application>

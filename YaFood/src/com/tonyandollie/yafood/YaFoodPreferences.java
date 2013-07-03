@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 	
-public  class YaFoodPreferences {
+public class YaFoodPreferences {
 	
 	public static Map<String,String> loadPreferences (Activity a) {
 	    SharedPreferences settings = a.getSharedPreferences("YaFood", android.content.Context.MODE_PRIVATE);
