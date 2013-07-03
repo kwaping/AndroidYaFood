@@ -27,22 +27,33 @@ public class Item extends BaseModel {
     }
     
     public static ArrayList<Item> fromJson(JSONArray jsonArray) {
-        ArrayList<Item> items = new ArrayList<Item>(jsonArray.length());
+        
+    	ArrayList<Item> items;
+    	try {
+    		items = new ArrayList<Item>(jsonArray.length());
+    	} catch (NullPointerException e) {
+    		e.printStackTrace();
+    		items = new ArrayList<Item>(0);
+    	}
 
-        for (int i=0; i < jsonArray.length(); i++) {
-            JSONObject ItemJson = null;
-            try {
-                ItemJson = jsonArray.getJSONObject(i);
-            } catch (Exception e) {
-                e.printStackTrace();
-                continue;
-            }
-
-            Item item = Item.fromJson(ItemJson);
-            if (items != null) {
-                items.add(item);
-            }
-        }
+    	try {
+	        for (int i=0; i < jsonArray.length(); i++) {
+	            JSONObject ItemJson = null;
+	            try {
+	                ItemJson = jsonArray.getJSONObject(i);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                continue;
+	            }
+	
+	            Item item = Item.fromJson(ItemJson);
+	            if (items != null) {
+	                items.add(item);
+	            }
+	        }
+    	} catch (NullPointerException e) {
+    		e.printStackTrace();
+    	}
 
         return items;
     }    

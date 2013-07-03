@@ -20,35 +20,51 @@ public class Station extends BaseModel {
 
         station.stationName = jsonObject.getString("txtStationDescription");
 
-//    	JSONArray itemArray = new JSONArray("[\"tblItem\"]");
-//		JSONArray itemsArray = jsonObject.toJSONArray(itemArray);
-//    	station.items = Item.fromJson(itemsArray);
-
-    	JSONArray itemsArray = jsonObject.getJSONArray("tblItem");
+        JSONArray itemsArray = new JSONArray();
+        
+    	try {
+	        itemsArray = jsonObject.optJSONArray("tblItem");
+	    	if (itemsArray.isNull(0)) {
+	    		JSONObject item = jsonObject.optJSONObject("tblItem");
+	    		itemsArray.put(item);
+	    	}
+    	} catch (NullPointerException e) {
+    		e.printStackTrace();
+    	}
+    	
     	station.items = Item.fromJson(itemsArray);
 
-        return station;
+    	return station;
     }
     
     public static ArrayList<Station> fromJson(JSONArray jsonArray) {
-        ArrayList<Station> stations = new ArrayList<Station>(jsonArray.length());
 
-		Log.d("DEBUG", "Stations jsonArray " +   jsonArray.toString());
+    	ArrayList<Station> stations;
+    	try {
+    		stations = new ArrayList<Station>(jsonArray.length());
+    	} catch (NullPointerException e) {
+    		e.printStackTrace();
+    		stations = new ArrayList<Station>(0);
+    	}
 
-		for (int i=0; i < jsonArray.length(); i++) {
-            JSONObject StationJson = null;
-            try {
-                StationJson = jsonArray.getJSONObject(i);
-            } catch (Exception e) {
-                e.printStackTrace();
-                continue;
-            }
-
-            Station station = Station.fromJson(StationJson);
-            if (stations != null) {
-                stations.add(station);
-            }
-        }
+    	try {
+			for (int i=0; i < jsonArray.length(); i++) {
+	            JSONObject StationJson = null;
+	            try {
+	                StationJson = jsonArray.getJSONObject(i);
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                continue;
+	            }
+	
+	            Station station = Station.fromJson(StationJson);
+	            if (stations != null) {
+	                stations.add(station);
+	            }
+	        }
+    	} catch (NullPointerException e) {
+    		e.printStackTrace();
+    	}
 
         return stations;
     }    

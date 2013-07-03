@@ -3,7 +3,6 @@ package com.tonyandollie.yafood;
 import java.util.ArrayList;
 
 import org.json.crockford.JSONArray;
-import org.json.crockford.JSONException;
 import org.json.crockford.JSONObject;
 
 public class DayPart extends BaseModel {
@@ -18,25 +17,20 @@ public class DayPart extends BaseModel {
 
     	dayPart.partName = jsonObject.getString("txtDayPartDescription");
     	
-//    	JSONArray names = new JSONArray("[\"tblStation\"]");
-//    	Log.d("DEBUG", "DayPart names " + names.toString());
-//    	JSONArray stationsArray = jsonObject.toJSONArray(names);
-//    	Log.d("DEBUG", "DayPart stationsArray " + stationsArray.toString());
-//    	dayPart.stations = Station.fromJson(stationsArray);
-//    	Log.d("DEBUG", "DayPart stations " + dayPart.stations.toString());
-
+    	JSONArray stationsArray = new JSONArray();
+    	
     	try {
-	    	JSONArray stationsArray = jsonObject.getJSONArray("tblStation");
-	    	dayPart.stations = Station.fromJson(stationsArray);
-    	} catch (JSONException e) {
-    		try {
-    			JSONObject stationObj = jsonObject.getJSONObject("tblStation");
-    			dayPart.stations = new ArrayList<Station>(1);
-    			dayPart.stations.add(Station.fromJson(stationObj));
-    		} catch (JSONException ex) {
-    			ex.printStackTrace();
-    		}
+	    	stationsArray = jsonObject.optJSONArray("tblStation");
+	    	if (stationsArray.isNull(0)) {
+	    		JSONObject station = jsonObject.optJSONObject("tblStation");
+	    		stationsArray.put(station);
+	    	}
+    	} catch (NullPointerException e) {
+    		e.printStackTrace();
     	}
+
+    	dayPart.stations = Station.fromJson(stationsArray);
+
         return dayPart;
     }
     
